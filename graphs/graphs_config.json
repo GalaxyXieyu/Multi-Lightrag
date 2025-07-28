@@ -1,0 +1,67 @@
+{
+  "test": {
+    "description": "testing",
+    "working_dir": "graphs/test",
+    "created_at": "2025-07-22T13:27:06.811486",
+    "entity_count": 0,
+    "relation_count": 0,
+    "is_active": false,
+    "updated_at": "2025-07-27T17:57:49.423676"
+  },
+  "default": {
+    "graph_id": "default",
+    "name": "Default Graph",
+    "description": "Default graph for LightRAG",
+    "created_at": "2025-07-22T13:45:09.334929",
+    "updated_at": "2025-07-28T14:55:53.519441",
+    "working_dir": "graphs/default",
+    "status": "active",
+    "is_active": false,
+    "entity_count": 0,
+    "relation_count": 0,
+    "document_count": 0,
+    "metadata": {}
+  },
+  "测试图谱": {
+    "graph_id": "测试图谱",
+    "name": "测试图谱",
+    "description": "这是一个测试图谱",
+    "created_at": "2025-07-22T14:00:16.613859",
+    "updated_at": "2025-07-28T14:56:00.006371",
+    "working_dir": "graphs/测试图谱",
+    "status": "active",
+    "is_active": false,
+    "entity_count": 0,
+    "relation_count": 0,
+    "document_count": 0,
+    "metadata": {}
+  },
+  "测试图谱_1753164855": {
+    "graph_id": "测试图谱_1753164855",
+    "name": "测试图谱_1753164855",
+    "description": "前端集成测试图谱",
+    "created_at": "2025-07-22T14:14:15.665404",
+    "updated_at": "2025-07-28T14:56:01.878994",
+    "working_dir": "graphs/测试图谱_1753164855",
+    "status": "active",
+    "is_active": false,
+    "entity_count": 0,
+    "relation_count": 0,
+    "document_count": 0,
+    "metadata": {}
+  },
+  "test-graph": {
+    "graph_id": "test-graph",
+    "name": "test-graph",
+    "description": "Test graph created from browser",
+    "created_at": "2025-07-27T17:57:10.931377",
+    "updated_at": "2025-07-28T15:09:27.262026",
+    "working_dir": "graphs/test-graph",
+    "status": "active",
+    "is_active": true,
+    "entity_count": 0,
+    "relation_count": 0,
+    "document_count": 0,
+    "metadata": {}
+  }
+}

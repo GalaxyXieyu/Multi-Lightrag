@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightRAG Mini - 知识图谱可视化</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .controls {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .control-group {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .control-group input, .control-group select, .control-group button {
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .control-group button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .control-group button:hover {
+            background: #0056b3;
+        }
+        
+        #graph {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .stats {
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        
+        .stat-item {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .node {
+            stroke: #fff;
+            stroke-width: 2px;
+            cursor: pointer;
+        }
+        
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.6;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 12px;
+            fill: #333;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+            max-width: 200px;
+            z-index: 1000;
+        }
+        
+        .query-section {
+            padding: 20px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .query-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .query-button {
+            width: 25%;
+            padding: 10px;
+            margin-left: 2%;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .query-button:hover {
+            background: #218838;
+        }
+        
+        .response {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🕸️ LightRAG Mini</h1>
+            <p>轻量级知识图谱 RAG 系统</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>实体名称 (可选)</label>
+                <input type="text" id="entityInput" placeholder="留空显示完整图谱">
+            </div>
+            
+            <div class="control-group">
+                <label>最大深度</label>
+                <select id="maxDepth">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>最大节点数</label>
+                <select id="maxNodes">
+                    <option value="50">50</option>
+                    <option value="100" selected>100</option>
+                    <option value="200">200</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button onclick="loadGraph()">🔄 加载图谱</button>
+            </div>
+            
+            <div class="control-group">
+                <button onclick="loadStats()">📊 刷新统计</button>
+            </div>
+        </div>
+        
+        <div class="stats" id="stats">
+            <div class="stat-item">
+                <span class="stat-value" id="entityCount">-</span>
+                <span class="stat-label">实体数量</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="relationCount">-</span>
+                <span class="stat-label">关系数量</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="nodeCount">-</span>
+                <span class="stat-label">显示节点</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="edgeCount">-</span>
+                <span class="stat-label">显示边</span>
+            </div>
+        </div>
+        
+        <div id="graph"></div>
+        
+        <div class="loading" id="loading">
+            <p>⏳ 加载中...</p>
+        </div>
+        
+        <div class="query-section">
+            <h3>💬 智能问答</h3>
+            <div>
+                <input type="text" id="queryInput" class="query-input" placeholder="输入你的问题...">
+                <button class="query-button" onclick="submitQuery()">提问</button>
+            </div>
+            <div id="queryResponse" class="response" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip" style="display: none;"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let simulation;
+        
+        // 颜色方案
+        const colors = d3.scaleOrdinal(d3.schemeCategory10);
+        
+        // 初始化图谱容器
+        const svg = d3.select("#graph")
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "100%");
+            
+        const width = document.getElementById('graph').clientWidth;
+        const height = 600;
+        
+        svg.attr("viewBox", [0, 0, width, height]);
+        
+        // 创建缩放行为
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on("zoom", (event) => {
+                container.attr("transform", event.transform);
+            });
+            
+        svg.call(zoom);
+        
+        const container = svg.append("g");
+        
+        // 工具提示
+        const tooltip = d3.select("#tooltip");
+        
+        // 加载图谱数据
+        async function loadGraph() {
+            const entityName = document.getElementById('entityInput').value.trim();
+            const maxDepth = parseInt(document.getElementById('maxDepth').value);
+            const maxNodes = parseInt(document.getElementById('maxNodes').value);
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch(`${API_BASE}/graph`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        entity_name: entityName || null,
+                        max_depth: maxDepth,
+                        max_nodes: maxNodes
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                renderGraph(data);
+                updateDisplayStats(data);
+                
+            } catch (error) {
+                console.error('Error loading graph:', error);
+                alert('加载图谱失败: ' + error.message);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // 加载统计信息
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/graph/stats`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const stats = await response.json();
+                document.getElementById('entityCount').textContent = stats.total_entities || 0;
+                document.getElementById('relationCount').textContent = stats.total_relationships || 0;
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        // 渲染图谱
+        function renderGraph(data) {
+            // 清除现有内容
+            container.selectAll("*").remove();
+            
+            if (!data.nodes || data.nodes.length === 0) {
+                container.append("text")
+                    .attr("x", width / 2)
+                    .attr("y", height / 2)
+                    .attr("text-anchor", "middle")
+                    .style("font-size", "18px")
+                    .style("fill", "#666")
+                    .text("暂无图谱数据");
+                return;
+            }
+            
+            // 停止之前的模拟
+            if (simulation) {
+                simulation.stop();
+            }
+            
+            // 创建链接
+            const links = container.selectAll(".link")
+                .data(data.edges)
+                .join("line")
+                .attr("class", "link")
+                .style("stroke-width", d => Math.sqrt(d.weight || 1));
+            
+            // 创建节点
+            const nodes = container.selectAll(".node")
+                .data(data.nodes)
+                .join("circle")
+                .attr("class", "node")
+                .attr("r", d => Math.sqrt((d.importance || 1) * 50) + 5)
+                .style("fill", d => colors(d.type || 'default'))
+                .on("mouseover", handleNodeMouseOver)
+                .on("mouseout", handleNodeMouseOut)
+                .on("click", handleNodeClick);
+            
+            // 创建标签
+            const labels = container.selectAll(".node-label")
+                .data(data.nodes)
+                .join("text")
+                .attr("class", "node-label")
+                .text(d => d.label || d.id)
+                .style("font-size", d => Math.max(10, Math.sqrt((d.importance || 1) * 50) / 2) + "px");
+            
+            // 创建力导向布局
+            simulation = d3.forceSimulation(data.nodes)
+                .force("link", d3.forceLink(data.edges).id(d => d.id).distance(100))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("collision", d3.forceCollide().radius(d => Math.sqrt((d.importance || 1) * 50) + 10));
+            
+            // 更新节点和连边位置
+            simulation.on("tick", () => {
+                links
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                
+                nodes
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y);
+                
+                labels
+                    .attr("x", d => d.x)
+                    .attr("y", d => d.y + 5);
+            });
+            
+            // 添加拖拽行为
+            nodes.call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+        }
+        
+        // 鼠标悬停事件
+        function handleNodeMouseOver(event, d) {
+            tooltip
+                .style("display", "block")
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px")
+                .html(`
+                    <strong>${d.label || d.id}</strong><br>
+                    类型: ${d.type || '未知'}<br>
+                    描述: ${d.description || '暂无描述'}
+                `);
+        }
+        
+        function handleNodeMouseOut() {
+            tooltip.style("display", "none");
+        }
+        
+        // 节点点击事件
+        function handleNodeClick(event, d) {
+            document.getElementById('entityInput').value = d.id;
+            loadGraph();
+        }
+        
+        // 拖拽事件
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        // 更新显示统计
+        function updateDisplayStats(data) {
+            document.getElementById('nodeCount').textContent = data.nodes.length;
+            document.getElementById('edgeCount').textContent = data.edges.length;
+        }
+        
+        // 提交查询
+        async function submitQuery() {
+            const query = document.getElementById('queryInput').value.trim();
+            if (!query) {
+                alert('请输入问题');
+                return;
+            }
+            
+            const responseDiv = document.getElementById('queryResponse');
+            responseDiv.style.display = 'block';
+            responseDiv.textContent = '⏳ 思考中...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/query`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query: query,
+                        mode: 'hybrid',
+                        top_k: 10
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                responseDiv.textContent = result.response;
+                
+            } catch (error) {
+                console.error('Error submitting query:', error);
+                responseDiv.textContent = '❌ 查询失败: ' + error.message;
+            }
+        }
+        
+        // 显示/隐藏加载状态
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+            document.getElementById('graph').style.display = show ? 'none' : 'block';
+        }
+        
+        // 键盘事件
+        document.getElementById('queryInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitQuery();
+            }
+        });
+        
+        document.getElementById('entityInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                loadGraph();
+            }
+        });
+        
+        // 初始化
+        window.addEventListener('load', () => {
+            loadStats();
+            loadGraph();
+        });
+    </script>
+</body>
+</html>

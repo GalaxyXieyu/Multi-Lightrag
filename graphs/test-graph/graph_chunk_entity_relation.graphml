@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d11" for="edge" attr.name="created_at" attr.type="long" />
+  <key id="d10" for="edge" attr.name="file_path" attr.type="string" />
+  <key id="d9" for="edge" attr.name="source_id" attr.type="string" />
+  <key id="d8" for="edge" attr.name="keywords" attr.type="string" />
+  <key id="d7" for="edge" attr.name="description" attr.type="string" />
+  <key id="d6" for="edge" attr.name="weight" attr.type="double" />
+  <key id="d5" for="node" attr.name="created_at" attr.type="long" />
+  <key id="d4" for="node" attr.name="file_path" attr.type="string" />
+  <key id="d3" for="node" attr.name="source_id" attr.type="string" />
+  <key id="d2" for="node" attr.name="description" attr.type="string" />
+  <key id="d1" for="node" attr.name="entity_type" attr.type="string" />
+  <key id="d0" for="node" attr.name="entity_id" attr.type="string" />
+  <graph edgedefault="undirected">
+    <node id="人工智能发展历史">
+      <data key="d0">人工智能发展历史</data>
+      <data key="d1">项目基本信息</data>
+      <data key="d2">本项目为人工智能发展历史的文档，涵盖了从1950年代至今的关键发展阶段和技术突破。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="人工智能早期发展">
+      <data key="d0">人工智能早期发展</data>
+      <data key="d1">时间安排</data>
+      <data key="d2">1950年到1970年代，人工智能领域的开端，包括图灵测试的提出和人工智能术语的首次使用。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="人工智能现代发展">
+      <data key="d0">人工智能现代发展</data>
+      <data key="d1">时间安排</data>
+      <data key="d2">1980年代至今，AI的商业化浪潮和深度学习时代的到来，包括深蓝和AlphaGo的里程碑事件。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="人工智能当前趋势">
+      <data key="d0">人工智能当前趋势</data>
+      <data key="d1">规范要求</data>
+      <data key="d2">当前人工智能在自然语言处理、计算机视觉、语音识别、机器学习和深度学习等领域取得重大突破。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="test-graph图谱">
+      <data key="d0">test-graph图谱</data>
+      <data key="d1">关联项目</data>
+      <data key="d2">该文档将被上传到test-graph图谱中，用于测试多图谱文件处理功能。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="图灵测试">
+      <data key="d0">图灵测试</data>
+      <data key="d1">规范要求</data>
+      <data key="d2">1950年由艾伦·图灵提出的测试，用于评估机器是否具有智能，被认为是人工智能领域的开端。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="达特茅斯会议">
+      <data key="d0">达特茅斯会议</data>
+      <data key="d1">时间安排</data>
+      <data key="d2">1956年，约翰·麦卡锡在达特茅斯学院会议上首次提出了'人工智能'这个术语，标志着AI研究的正式开始。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="深蓝计算机">
+      <data key="d0">深蓝计算机</data>
+      <data key="d1">资源设施</data>
+      <data key="d2">IBM开发的深蓝计算机，1997年击败国际象棋世界冠军加里·卡斯帕罗夫，展示了AI在复杂计算中的能力。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="AlphaGo">
+      <data key="d0">AlphaGo</data>
+      <data key="d1">资源设施</data>
+      <data key="d2">谷歌开发的AlphaGo程序，2016年击败围棋世界冠军李世石，标志着深度学习技术的突破。</data>
+      <data key="d3">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d4">ai_history.txt</data>
+      <data key="d5">1753610671</data>
+    </node>
+    <node id="AI技术发展">
+      <data key="d0">AI技术发展</data>
+      <data key="d1">manual</data>
+      <data key="d2">手动创建的节点</data>
+      <data key="d3">manual_creation</data>
+      <data key="d4">manual_input</data>
+      <data key="d5">1753668449</data>
+    </node>
+    <edge source="人工智能发展历史" target="人工智能早期发展">
+      <data key="d6">8.0</data>
+      <data key="d7">人工智能发展历史涵盖了早期发展的关键事件和时间节点。</data>
+      <data key="d8">延续</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能发展历史" target="人工智能当前趋势">
+      <data key="d6">8.0</data>
+      <data key="d7">人工智能发展历史展示了当前趋势中的技术突破和应用领域。</data>
+      <data key="d8">延续</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能发展历史" target="test-graph图谱">
+      <data key="d6">7.0</data>
+      <data key="d7">该文档作为人工智能发展历史的一部分，将被上传到test-graph图谱中进行测试。</data>
+      <data key="d8">关联</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能早期发展" target="图灵测试">
+      <data key="d6">9.0</data>
+      <data key="d7">图灵测试是人工智能早期发展的重要里程碑，标志着AI研究的开端。</data>
+      <data key="d8">COMPLIES_WITH</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能早期发展" target="达特茅斯会议">
+      <data key="d6">9.0</data>
+      <data key="d7">达特茅斯会议是人工智能早期发展的关键事件，正式提出了AI的概念。</data>
+      <data key="d8">PRECEDES</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能早期发展" target="人工智能现代发展">
+      <data key="d7">技术演进</data>
+      <data key="d8">技术演进</data>
+      <data key="d9">manual_creation</data>
+      <data key="d6">1.0</data>
+      <data key="d10">manual_input</data>
+      <data key="d11">1753678139</data>
+    </edge>
+    <edge source="人工智能现代发展" target="深蓝计算机">
+      <data key="d6">9.0</data>
+      <data key="d7">深蓝计算机是人工智能现代发展中的重要成就，展示了AI在复杂计算中的能力。</data>
+      <data key="d8">ENABLES</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能现代发展" target="AlphaGo">
+      <data key="d6">9.0</data>
+      <data key="d7">AlphaGo是人工智能现代发展中的重要成就，标志着深度学习技术的突破。</data>
+      <data key="d8">ENABLES</data>
+      <data key="d9">chunk-8090ad870bbb8d3f4c102856c87961f5</data>
+      <data key="d10">ai_history.txt</data>
+      <data key="d11">1753610671</data>
+    </edge>
+    <edge source="人工智能现代发展" target="图灵测试">
+      <data key="d7">测试</data>
+      <data key="d8">测试</data>
+      <data key="d9">manual_creation</data>
+      <data key="d6">1.0</data>
+      <data key="d10">manual_input</data>
+      <data key="d11">1753678276</data>
+    </edge>
+    <edge source="test-graph图谱" target="达特茅斯会议">
+      <data key="d7">学术研究</data>
+      <data key="d8">学术研究</data>
+      <data key="d9">manual_creation</data>
+      <data key="d6">1.0</data>
+      <data key="d10">manual_input</data>
+      <data key="d11">1753678345</data>
+    </edge>
+  </graph>
+</graphml>

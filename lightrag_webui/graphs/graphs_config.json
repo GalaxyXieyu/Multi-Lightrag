@@ -1,0 +1,29 @@
+{
+  "主图谱": {
+    "graph_id": "主图谱",
+    "name": "主图谱",
+    "description": "从原始rag_storage迁移的主图谱",
+    "created_at": "2025-07-22T16:44:39.541093",
+    "updated_at": "2025-07-22T16:44:39.541093",
+    "working_dir": "/Volumes/DATABASE/code/LightRAG/lightrag_webui/graphs/主图谱",
+    "status": "active",
+    "is_active": true,
+    "entity_count": 5086,
+    "relation_count": 3544,
+    "document_count": 0,
+    "metadata": {
+      "migrated_from": "/Volumes/DATABASE/code/LightRAG/rag_storage",
+      "migration_date": "2025-07-22T16:44:39.541093",
+      "migrated_files": [
+        "graph_chunk_entity_relation.graphml",
+        "kv_store_doc_status.json",
+        "kv_store_full_docs.json",
+        "kv_store_llm_response_cache.json",
+        "kv_store_text_chunks.json",
+        "vdb_chunks.json",
+        "vdb_entities.json",
+        "vdb_relationships.json"
+      ]
+    }
+  }
+}
